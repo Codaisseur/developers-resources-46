@@ -1,3 +1,5 @@
+import { ADD_RESOURCE } from "./actions";
+
 const initialState = {
   all: [
     {
@@ -47,6 +49,22 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
+    case ADD_RESOURCE: {
+      const newResource = action.payload; // { id, name, url, type }
+      const { id, name, url, type } = action.payload;
+      return {
+        ...state,
+        all: [...state.all, { id, name, url, type }],
+      };
+    }
+    case "DELETE_A_RESOURCE": {
+      // im going to need an id of the resource => action.payload
+      const resourceId = action.payload;
+      return {
+        ...state,
+        all: state.all.filter(r => r.id !== resourceId),
+      };
+    }
     default: {
       return state;
     }

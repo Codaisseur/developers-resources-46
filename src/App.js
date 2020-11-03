@@ -10,6 +10,7 @@ import {
   convertResourceIdsToNames,
 } from "./store/resources/selectors";
 import React, { useState } from "react";
+import ResourceForm from "./components/ResourceForm";
 
 function App() {
   const [selectedResource, setSelectedResource] = useState(1);
@@ -28,43 +29,60 @@ function App() {
     convertResourceIdsToNames(selectedDev.favorites)
   );
 
-  console.log("devs favorites", favorites);
-
   return (
     <div className='App'>
       <header className='App-header'>
-        <h1>Web development resources</h1>
-        <div>
-          <h3>Developers: {developerCount}</h3>
-        </div>
-        <div>
-          <select
-            value={selectedResource}
-            onChange={e => setSelectedResource(parseInt(e.target.value))}
-          >
-            {allResources.map(resource => (
-              <option value={resource.id} key={resource.id}>
-                {resource.name}
-              </option>
-            ))}
-          </select>
-          <div>
-            {withFavorite.map(d => (
-              <h3>{d.name}</h3>
-            ))}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            paddingTop: 100,
+          }}
+        >
+          <div style={{ marginLeft: 100 }}>
+            <h1>Web development resources</h1>
+            <div>
+              <h3>Developers: {developerCount}</h3>
+            </div>
+            <div>
+              <select
+                value={selectedResource}
+                onChange={e => setSelectedResource(parseInt(e.target.value))}
+              >
+                {allResources.map(resource => (
+                  <option value={resource.id} key={resource.id}>
+                    {resource.name}
+                  </option>
+                ))}
+              </select>
+              <div>
+                {withFavorite.map(d => (
+                  <h3>{d.name}</h3>
+                ))}
+              </div>
+            </div>
+            <div>
+              <select
+                onChange={e => setSelectedDeveloper(parseInt(e.target.value))}
+                value={selectedDeveloper}
+              >
+                {allDevelopers.map(d => (
+                  <option key={d.id} value={d.id}>
+                    {d.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              {allResources.map(r => (
+                <h3>{r.name}</h3>
+              ))}
+            </div>
           </div>
-        </div>
-        <div>
-          <select
-            onChange={e => setSelectedDeveloper(parseInt(e.target.value))}
-            value={selectedDeveloper}
-          >
-            {allDevelopers.map(d => (
-              <option key={d.id} value={d.id}>
-                {d.name}
-              </option>
-            ))}
-          </select>
+          <div style={{ marginRight: 300 }}>
+            <ResourceForm />
+          </div>
         </div>
       </header>
     </div>

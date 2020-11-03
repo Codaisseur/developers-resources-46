@@ -18,3 +18,10 @@ export const getDevsFavourites = devId => reduxState => {
   );
   return favNames;
 };
+
+export const getUniqueResourceTypes = reduxState => {
+  const allRes = reduxState.resources.all;
+  const allTypes = allRes.map(r => r.type);
+  const uniqueTypes = [...new Set(allTypes)];
+  return uniqueTypes;
+};
